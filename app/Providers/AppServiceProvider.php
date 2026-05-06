@@ -20,6 +20,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        if (config('app.env') === 'production') {
+            \Illuminate\Support\Facades\URL::forceScheme('https');
+        }
+
         // Super Admin-ге барлық рұқсаттарды автоматты түрде беру
         Gate::before(function ($user, $ability) {
             return $user->hasRole('super-admin') ? true : null;
