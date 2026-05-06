@@ -1,5 +1,10 @@
 <?php
 
+// FIX for HTTPS behind proxy (Render / Railway / etc.)
+if (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https') {
+    $_SERVER['HTTPS'] = 'on';
+}
+
 use Illuminate\Foundation\Application;
 use Illuminate\Http\Request;
 
@@ -18,4 +23,3 @@ require __DIR__.'/../vendor/autoload.php';
 $app = require_once __DIR__.'/../bootstrap/app.php';
 
 $app->handleRequest(Request::capture());
-
